@@ -1,0 +1,26 @@
+{
+  "name": "helgajs",
+  "version": "0.9.0",
+  "description": "A text based game engine for teaching JavaScript.",
+  "main": "helga.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orangemantis/HelgaJS"
+  },
+  "keywords": [
+    "games",
+    "engine",
+    "education",
+    "teaching",
+    "learning"
+  ],
+  "author": "RA Sims II",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orangemantis/HelgaJS/issues"
+  },
+  "homepage": "https://github.com/orangemantis/HelgaJS"
+}
