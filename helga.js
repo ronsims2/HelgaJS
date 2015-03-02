@@ -240,7 +240,7 @@
                
            }
            else {
-               this.showScreen(gd, currentScreen);
+               this.showScreen(gd, this.getItem('_currentScreen');
            }
            return false;
        },
