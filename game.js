@@ -295,7 +295,8 @@ var gd = {
         d: "",
         e: "",
         action: function (ge, gd, answer){
-            return {goto: 999};
+            var gameover = ge.getItem("_gameOverLose");
+            return {goto: gameover};
         }
     }, {
         id: 12,
@@ -851,7 +852,8 @@ var gd = {
             ge.setItem('_currentBoss', null);
             ge.adjustItem('_heartLimit', 1);
             ge.setItem('hearts', ge.getItem('_heartLimit'));
-            return {goto: 9999};
+            var gameover = ge.getItem("_gameOverWin")
+            return {goto: gameover};
         }
     }, {
         id: 40,
