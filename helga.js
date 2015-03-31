@@ -127,7 +127,7 @@
            
            return text;
        },
-       isEmptyText: function(text, textType){
+       hasText: function(text, textType){
            text = text.trim();
            var result = false;
            

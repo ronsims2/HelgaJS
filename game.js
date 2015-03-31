@@ -71,7 +71,7 @@ var gd = {
         usePrompt: true,
         action: function (ge, gd, answer){
             var act = {};
-            if (answer.match(/[A-Za-z0-9]+/)) {
+            if (ge.hasText(answer, "ABC123")) {
                 act.goto = 4;
                 ge.setItem('name', answer);
             }
@@ -768,7 +768,7 @@ var gd = {
         e: "",
         action: function (ge, gd, answer){
             var act = {goto: 33};
-            var boss = gd._currentBoss;
+            var boss = ge.getItem("_currentBoss");
             var bossHearts = ge.attack(boss, -1);
 
             if (!bossHearts) {
