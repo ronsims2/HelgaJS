@@ -2,7 +2,7 @@ var gd = {
     name: "Tank",
     hearts: 5,
     matches: 5,
-    lantern: false,// use numeric to count how many times lantern was tried to get
+    lantern: false,
     gems: 0,
     rescuee: "Helga",
     enemies: ["Grublor", "Stolak"],
@@ -52,7 +52,6 @@ var gd = {
         e: "",
         hideStats: true,
         action: function(ge, gd, answer){
-            //initialize inventory here
             var matches = "Matches (" + ge.getItem("matches") + ")";
             ge.setInventory('light', 'Light', matches);
             return {goto: 2};
@@ -165,18 +164,13 @@ var gd = {
             var matches = ge.getItem('matches');
             var forestKey = ge.getItem('forestKey');
 
-                            //remove a match if there is no lantern, this must happen before matches value read
             if (!lantern) {
                 //ge.adjustItem('matches', -1);
                 act.matches = -1;
             }
 
-            //If there are no matches the game is over
             if (!matches && !lantern) {
                 act.goto = 11;
-                /**
-                *@todo replace with real game over screen
-                */
                 return act;
             }
 
@@ -185,8 +179,7 @@ var gd = {
                     if(lantern) {
                         act.goto = 10;
                         return act;
-                    }
-                    //Assume no lantern if here 
+                    } 
                     if (roll > 6) {
 
                         act.goto = 8;
@@ -211,12 +204,11 @@ var gd = {
                         act.goto = 12;
                     }
                     else {
-                        act.goto = 13;//key not found
+                        act.goto = 13;
                     }
                     break;
                 case "C":
                     if (forestKey) {
-                        //hide key from inventory, it has been used
                         ge.setInventory("key", "", "---");
                         act.goto = 18;
                     }
@@ -244,7 +236,6 @@ var gd = {
         d: "",
         e: "",
         action: function (ge, gd, answer){
-            //change screen sevens message, zero indexed!
             ge.setItem('lantern', true);
             ge.setInventory("light", "", "Eternal Lantern");
 
@@ -310,10 +301,10 @@ var gd = {
         action: function (ge, gd, answer){
             ge.setItem('forestKey', true);
             ge.setInventory("key", "", "Forest Temple Key");
-            return {goto: 7};//forest temple screen
+            return {goto: 7};
         }
     }, {
-        id: 13,//battle screen
+        id: 13,
         title: "An {{ENEMY}} has appear.", 
         text: "Prepare for battle, I hope your sword is sharp.",
         a: "",
@@ -329,12 +320,11 @@ var gd = {
             }
             else {
                 act.goto = 15;
-                //act.hearts = -1;
             }
             return act;
         }
     }, {
-        id: 14,//battle screen
+        id: 14,
         title: "Victory is Yours {{NAME}}.", 
         text: "Your fought valiantly and earned 5 gems.",
         a: "",
@@ -397,23 +387,12 @@ var gd = {
         d: "Quit",
         e: "",
         action: function (ge, gd, answer){
-            //Set _currentBoss
             if (!ge.getItem('_currentBoss')) {
                 var boss = ge.getBoss(1);
                 ge.setItem('_currentBoss', boss);
             }
-            //change screen text if boss key found
             var bossKey = ge.getItem('forestBossKey');
             var lantern = ge.getItem('lantern');
-            /* This dynamically changed he screen text
-            if (bossKey) {
-                var scr = ge.getScreen(gd, 17);
-                if (scr){
-                    scr.c = "Enter Boss Room";
-                    scr.d = "Quit";
-                }
-            }*/
-
             var act = {};
             var roll = ge.rollDice();
             switch(answer){
@@ -424,31 +403,22 @@ var gd = {
                     if (!lantern){
                         act.matches = -1;
                     }
-                    // find chest
                     if (roll === 1 || roll === 12) {
                         act.goto = 26;
                     }
-                    //find 
                     if (roll === 9 || roll === 10 || roll === 11) {
                         act.goto = 27;
                     }
-                    //fight here
                     if (roll === 2 || roll === 3 || roll === 4 || roll === 5 || roll === 6 || roll === 7 || roll === 8) {
                         act.goto = 28;
                     }
                     break;
                 case "C":
-                    console.log('boss key ', bossKey);
                     if (bossKey) {
                         act.goto = 31;
-                        /**
-                        *@todo send to boss screen
-                        */
-                        console.log('gotta key');
                     }
                     else {
                         act.goto = 32;
-                        console.log('no key');
                     }
                     break;
                 case "STUFF":
@@ -471,9 +441,9 @@ var gd = {
         d: "A heart potion - 15 gems",
         e: "Exit the shop",
         action: function (ge, gd, answer){
-            var lanternPrice = 20;//20
-            var shieldPrice = 25;//35
-            var potionPrice = 15;//15
+            var lanternPrice = 20;
+            var shieldPrice = 25;
+            var potionPrice = 15;
 
             var act = {};
             var gems = ge.getItem('gems');
@@ -653,7 +623,6 @@ var gd = {
             var act = {};
             var roll = ge.rollDice();
             if (roll > 8) {
-                //win
                 act.goto = 29;
             }
             else {
