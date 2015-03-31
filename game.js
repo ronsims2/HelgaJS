@@ -704,7 +704,7 @@ var gd = {
         }
     }, {
         id: 32,
-        title: "You Cannot enter this Room",
+        title: "You cannot enter this room.",
         text: "You must explore the temple to find the boss room key to get in.",
         a: "",
         b: "",
@@ -840,7 +840,7 @@ var gd = {
     }, {
         id: 39,
         title: "You defeated {{BOSS}}.",
-        text: "A hidden stone door crumbles and the {{RESCUEE}} runs out and hugs you. Thank you for saving me {{NAME}} I do not know how to thank you! \n" +
+        text: "A hidden stone door crumbles and {{RESCUEE}} runs out and hugs you. Thank you for saving me {{NAME}} I do not know how to thank you! \n" +
               "Congratulations what will you next quest be?",
         a: "",
         b: "",
