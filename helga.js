@@ -127,6 +127,29 @@
            
            return text;
        },
+       isEmptyText: function(text, textType){
+           text = text.trim();
+           var result = false;
+           
+           if (!text) {
+               return result;
+           }
+           
+           if (textType === "ABC") {
+               result = text.match(/^[A-Za-z]+$/) ? true : false;
+               return result;
+           }
+           
+           if (textType === "ABC123") {
+               result = text.match(/^[A-Za-z0-9]+$/) ? true : false;
+               return result;
+           }
+           
+           if (text) {
+               result = true;
+           }
+           return result;
+       },
        setInventory: function(item, title, name) {
            var inv = this.getItem("inventory");
            

@@ -40,6 +40,7 @@ var gd = {
           name: "---"
       }
    },
+   credits: "Created by RA Sims II",
     screens: [{
         id: 1,
         title: "The Legend of Helga",
