@@ -42,8 +42,8 @@
     var gameData;
     
    var gameEngine = {
-       tokens: ["{{NAME}}", "{{TITLE}}", "{{RESCUEE}}", "{{MATCHES}}", "{{HEARTS}}", "{{GEMS}}", "{{ENEMY}}", "{{BOSS}}", "{{INVENTORY}}"],
-       tokenHandlers: ["name", "title", "rescuee", "matches", "hearts", "gems", "getEnemy", "getCurrentBossName", "formatInventory"],
+       tokens: ["{{NAME}}", "{{TITLE}}", "{{RESCUEE}}", "{{MATCHES}}", "{{HEARTS}}", "{{GEMS}}", "{{ENEMY}}", "{{BOSS}}", "{{INVENTORY}}", "{{CREDITS}}"],
+       tokenHandlers: ["name", "title", "rescuee", "matches", "hearts", "gems", "getEnemy", "getCurrentBossName", "formatInventory", "credits"],
        getScreen: function(gd, num){
            var scr = gd.screens[num] || false;
            return scr;

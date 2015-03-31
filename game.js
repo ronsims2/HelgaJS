@@ -262,7 +262,6 @@ var gd = {
         e: "",
         action: function (ge, gd, answer){
             var act = {};
-            var lantern = ge.getItem('lantern');
             var matches = ge.getItem('matches');
 
             if (matches) {
