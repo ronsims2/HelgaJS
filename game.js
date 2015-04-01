@@ -859,7 +859,10 @@ var gd = {
         d: "",
         e: "",
         action: function (ge, gd, answer){
-            return {goto: 9999};
+            return {
+                goto: 9999,
+                gameover: true
+                };
         }
     }, {
         id: 43,
@@ -871,7 +874,10 @@ var gd = {
         d: "",
         e: "",
         action: function (ge, gd, answer){
-            return {goto: 9999};
+            return {
+                goto: 9999,
+                gameover: true
+                };
         }
     }, {
         id: 44,
@@ -883,7 +889,10 @@ var gd = {
         d: "",
         e: "",
         action: function (ge, gd, answer){
-            return {goto: 9999};
+            return {
+                goto: 9999,
+                gameover: true
+                };
         }
     }]
 };

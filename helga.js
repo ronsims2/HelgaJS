@@ -207,7 +207,10 @@
            }
            
            var act = gd.screens[screenNum - 1].action(this, gd, answer);// call screen specific logic
-
+           
+           if (act.gameover){
+               return false;
+           }
 
            if (act) {
                var hearts = act.hearts || 0;// heart adjustment
@@ -249,8 +252,7 @@
                
                //game over player was killed
                if (!currentHearts) {
-                   console.log('Process: game over.');
-                   return false;
+                   goto = this.getItem("_gameOverLose");
                }
                //handle gems
                if (gems) {
@@ -263,7 +265,12 @@
                
            }
            else {
-               this.showScreen(gd, this.getItem('_currentScreen'));
+               console.log("no act found");
+               var currentScreen = this.getItem('_currentScreen');
+               if (currentScreen) {
+                   this.showScreen(gd, currentScreen);
+               }
+               return false;
            }
            return false;
        },
