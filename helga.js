@@ -245,7 +245,7 @@
                if (!currentHearts && potion) {
                    this.adjustItem('hearts', this.getItem('_heartLimit'));
                    this.setItem('heartPotion', false);
-                   ths.setInventory("potion", "", "---");
+                   this.setInventory("potion", "", "---");
                    currentHearts = this.adjustItem('hearts', hearts);
                }
                
