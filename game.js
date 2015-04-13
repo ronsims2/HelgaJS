@@ -107,7 +107,7 @@ var gd = {
         }
     }, {
         id: 5,
-        title:"{{RESCUEE}} is not going to save herself", 
+        title:"{{RESCUEE}} is not going to save herself.", 
         text: "where will you start?",
         a: "Venture into the Dark Forest",
         b: "Vist the Dark Forest Temple",
@@ -188,10 +188,6 @@ var gd = {
                         if(matches) {
                             act.goto = 9;
                         }
-                        else {
-                            act.goto = 11;
-                        }
-
                     }
 
                     break;
@@ -325,7 +321,7 @@ var gd = {
         }
     }, {
         id: 14,
-        title: "Victory is Yours {{NAME}}.", 
+        title: "Victory is yours {{NAME}}.", 
         text: "Your fought valiantly and earned 5 gems.",
         a: "",
         b: "",
@@ -355,8 +351,8 @@ var gd = {
         }
     }, {
         id: 16,
-        title: "You need a key to enter the Temple.", 
-        text: "Maybe you should better equip yourself before you head to the temple.",
+        title: "You need a key to enter the temple.", 
+        text: "Maybe you should better equip yourself before you head there.",
         a: "",
         b: "",
         c: "",
@@ -534,7 +530,7 @@ var gd = {
         }
     }, {
         id: 22,
-        title: "Dreeko really likes chraity but I have 9 kids to feed.", 
+        title: "Dreeko really likes charity, but I have 9 kids to feed.", 
         text: "Maybe you should check the temple for treasure and come back later?",
         a: "",
         b: "",
@@ -546,7 +542,7 @@ var gd = {
         }
     }, {
         id: 23,
-        title: "I'd really like to sell you something but, in this temple, you really need a lantern.", 
+        title: "I'd really like to sell you something, but in this temple you really need a lantern.", 
         text: "Maybe there is somethign else you need?",
         a: "",
         b: "",
@@ -559,7 +555,7 @@ var gd = {
     }, {
         id: 24,
         title: "Dreeko thinks you are smart.", 
-        text: "The leather shield will cut your damage in half",
+        text: "The leather shield will cut your damage in half.",
         a: "",
         b: "",
         c: "",
@@ -573,7 +569,7 @@ var gd = {
     }, {
         id: 25,
         title: "This potion is quite special.", 
-        text: "if you fall in battle it will revive you to full health.",
+        text: "If you fall in battle, it will revive you to full health.",
         a: "",
         b: "",
         c: "",
@@ -811,7 +807,7 @@ var gd = {
         id: 39,
         title: "You defeated {{BOSS}}.",
         text: "A hidden stone door crumbles and {{RESCUEE}} runs out and hugs you. Thank you for saving me {{NAME}} I do not know how to thank you! \n" +
-              "Congratulations what will you next quest be?",
+              "Congratulations what will your next quest be?",
         a: "",
         b: "",
         c: "",
@@ -821,7 +817,7 @@ var gd = {
             ge.setItem('_currentBoss', null);
             ge.adjustItem('_heartLimit', 1);
             ge.setItem('hearts', ge.getItem('_heartLimit'));
-            var gameover = ge.getItem("_gameOverWin")
+            var gameover = ge.getItem("_gameOverWin");
             return {goto: gameover};
         }
     }, {
@@ -867,7 +863,7 @@ var gd = {
     }, {
         id: 43,
         title: "Game Over",
-        text: "Congradulation! You saved Princess {{RESCUEE}}. {{NAME}}, perhaps now you might create your own quest?",
+        text: "Congratulation! You saved Princess {{RESCUEE}}. {{NAME}}, perhaps now you might create your own quest?",
         a: "",
         b: "",
         c: "",
