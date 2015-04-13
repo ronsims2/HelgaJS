@@ -336,7 +336,7 @@ var gd = {
         }
     }, {
         id: 15,
-        title: "The agnony of defeat!", 
+        title: "The agony of defeat!", 
         text: "Your managed to slay the beast but not before sustaining some damage.",
         a: "",
         b: "",
