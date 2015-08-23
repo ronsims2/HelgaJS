@@ -3,7 +3,7 @@ An text based game engine designed for teaching JavaScript.
 
 ##Game Engine API
 
-The game engine has a few methods and properties that are used to make building the game easier. This is known as the game engine API (Application Programming Interface).  API is a fancy word that means the thing you use to program the game engine. The API handle the more common programing task. Below is a list of the available methods and properties.
+The game engine has a few methods and properties that are used to make building the game easier.. Below is a list of the available methods and properties.
 
 addToken: This method takes two strings parameters: token and meth. It adds the token to the tokens array and meth to the tokenHandlers array.  This method can be used to add custom tokens to screens. See tokens for more information.
 
