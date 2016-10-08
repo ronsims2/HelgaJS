@@ -22,6 +22,7 @@ var gd = {
     _quitScreen: 44,
     _inventoryScreen: 40,
     _creditsScreen: 41,
+    _invalidAnswer: 45,
     inventory: {
       sword: {
           title: "Sword",
@@ -59,7 +60,7 @@ var gd = {
 
     }, {
         id: 2,
-        title:"Before we get started...", 
+        title:"Before we get started...",
         text: "Adventurer, what is your name?",
         a: "",
         b: "",
@@ -82,7 +83,7 @@ var gd = {
     }
     }, {
         id: 3,
-        title:"That's not a name!", 
+        title:"That's not a name!",
         text: "It's not that hard, just type your name.",
         a: "",
         b: "",
@@ -94,7 +95,7 @@ var gd = {
         }
     }, {
         id: 4,
-        title:"{{RESCUEE}} has been kidknapped!", 
+        title:"{{RESCUEE}} has been kidknapped!",
         text: "The local village blacksmith said that he saw her taken into the forest by a shadowy figure. " +
               "He gave you a Silver Sword to help you in your quest. You'd better hurry into the forest and save her. ",
         a: "",
@@ -107,7 +108,7 @@ var gd = {
         }
     }, {
         id: 5,
-        title:"{{RESCUEE}} is not going to save herself.", 
+        title:"{{RESCUEE}} is not going to save herself.",
         text: "where will you start?",
         a: "Venture into the Dark Forest",
         b: "Vist the Dark Forest Temple",
@@ -128,16 +129,19 @@ var gd = {
                 case "INVENTORY":
                     act.goto = ge.getItem("_inventoryScreen");
                     break;
-                default:
+                case "C":
+                case "QUIT":
                     act.goto = ge.getItem("_quitScreen");
-
+                    break;
+                default:
+                    act.goto = ge.getItem("_invalidAnswer");
             }
 
             return act;
         }
     }, {
         id: 6,
-        title: "You need a key to get in the Dark Forest Temple.", 
+        title: "You need a key to get in the Dark Forest Temple.",
         text: "Maybe you should look for one in the forest.",
         a: "",
         b: "",
@@ -149,7 +153,7 @@ var gd = {
         }
     }, {
         id: 7,
-        title:"The forest is dark.", 
+        title:"The forest is dark.",
         text: "you will need a lantern to find anything, what will you do?",
         a: "Look for a lantern",
         b: "Look for the temple key",
@@ -179,7 +183,7 @@ var gd = {
                     if(lantern) {
                         act.goto = 10;
                         return act;
-                    } 
+                    }
                     if (roll > 6) {
 
                         act.goto = 8;
@@ -216,15 +220,19 @@ var gd = {
                 case "INVENTORY":
                     act.goto = ge.getItem("_inventoryScreen");
                     break;
-                default:
+                case "D":
+                case "QUIT":
                     act.goto = ge.getItem("_quitScreen");
+                    break;
+                default:
+                    act.goto = ge.getItem("_invalidAnswer");
 
             }
             return act;
         }
     }, {
         id: 8,
-        title:"You found a lantern!", 
+        title:"You found a lantern!",
         text: "Now you don't have to keep burning your fingers with those pesky matches.",
         a: "",
         b: "",
@@ -241,7 +249,7 @@ var gd = {
         }
     }, {
         id: 9,
-        title:"Drats, you didn't find a lantern yet.", 
+        title:"Drats, you didn't find a lantern yet.",
         text: "You'd better hurry you only have {{MATCHES}} matches left!",
         a: "",
         b: "",
@@ -262,7 +270,7 @@ var gd = {
         }
     }, {
         id: 10,
-        title:"You can't find something you already have.", 
+        title:"You can't find something you already have.",
         text: "look for the key already!",
         a: "",
         b: "",
@@ -274,7 +282,7 @@ var gd = {
         }
     }, {
         id: 11,
-        title: "As your last match burned to cinder, you saw your hope fade to blackness.", 
+        title: "As your last match burned to cinder, you saw your hope fade to blackness.",
         text: "You are lost forever in darkness. -GAME OVER.",
         a: "",
         b: "",
@@ -287,7 +295,7 @@ var gd = {
         }
     }, {
         id: 12,
-        title: "Hooray!", 
+        title: "Hooray!",
         text: "You found the Forest Temple key.",
         a: "",
         b: "",
@@ -301,7 +309,7 @@ var gd = {
         }
     }, {
         id: 13,
-        title: "An {{ENEMY}} has appear.", 
+        title: "An {{ENEMY}} has appear.",
         text: "Prepare for battle, I hope your sword is sharp.",
         a: "",
         b: "",
@@ -321,7 +329,7 @@ var gd = {
         }
     }, {
         id: 14,
-        title: "Victory is yours {{NAME}}.", 
+        title: "Victory is yours {{NAME}}.",
         text: "Your fought valiantly and earned 5 gems.",
         a: "",
         b: "",
@@ -336,7 +344,7 @@ var gd = {
         }
     }, {
         id: 15,
-        title: "The agony of defeat!", 
+        title: "The agony of defeat!",
         text: "Your managed to slay the beast but not before sustaining some damage.",
         a: "",
         b: "",
@@ -351,7 +359,7 @@ var gd = {
         }
     }, {
         id: 16,
-        title: "You need a key to enter the temple.", 
+        title: "You need a key to enter the temple.",
         text: "Maybe you should better equip yourself before you head there.",
         a: "",
         b: "",
@@ -363,7 +371,7 @@ var gd = {
         }
     }, {
         id: 17,
-        title: "{{NAME}} you are not going to find another key.", 
+        title: "{{NAME}} you are not going to find another key.",
         text: "Is it time to head to the temple?",
         a: "",
         b: "",
@@ -375,7 +383,7 @@ var gd = {
         }
     }, {
         id: 18,
-        title: "Forest Temple Entrance", 
+        title: "Forest Temple Entrance",
         text: "Stay alert, this temple is very dangerous, {{NAME}} what will you do?",
         a: "Visit the temple shop",
         b: "Explore the temple",
@@ -418,18 +426,19 @@ var gd = {
                     }
                     break;
                 case "STUFF":
-                case "INVENTORY":
-                    act.goto = ge.getItem("_inventoryScreen");
+                case "D":
+                case "QUIT":
+                    act.goto = ge.getItem("_quitScreen");
                     break;
                 default:
-                    act.goto = ge.getItem("_quitScreen");
+                    act.goto = ge.getItem("_invalidAnswer");
             }
 
             return act;
         }
     }, {
         id: 19,
-        title: "Hayloo, welcome to my shop.", 
+        title: "Hayloo, welcome to my shop.",
         text: "I am Dreeko, What would yoooh like to buy?",
         a: "A lantern - 20 gems",
         b: "5 matches 10 gems",
@@ -494,18 +503,18 @@ var gd = {
                     act.goto = 18;
                     break;
                 case "STUFF":
-                case "INVENTORY":
-                    act.goto = ge.getItem("_inventoryScreen");
+                case "QUIT":
+                    act.goto = ge.getItem("_quitScreen");
                     break;
                 default:
-                    act.goto = ge.getItem("_quitScreen");
+                    act.goto = ge.getItem("_invalidAnswer");
             }
 
             return act;
         }
     }, {
         id: 20,
-        title: "Looks like you already have one of those.", 
+        title: "Looks like you already have one of those.",
         text: "As much as Dreeko would like to sell you another one, I just can't.",
         a: "",
         b: "",
@@ -517,7 +526,7 @@ var gd = {
         }
     }, {
         id: 21,
-        title: "{{NAME}} you are the owner of a shiny new lantern!", 
+        title: "{{NAME}} you are the owner of a shiny new lantern!",
         text: "Dreeko thinks you could have saved money looking for one in the forest though...",
         a: "",
         b: "",
@@ -530,7 +539,7 @@ var gd = {
         }
     }, {
         id: 22,
-        title: "Dreeko really likes charity, but I have 9 kids to feed.", 
+        title: "Dreeko really likes charity, but I have 9 kids to feed.",
         text: "Maybe you should check the temple for treasure and come back later?",
         a: "",
         b: "",
@@ -542,7 +551,7 @@ var gd = {
         }
     }, {
         id: 23,
-        title: "I'd really like to sell you something, but in this temple you really need a lantern.", 
+        title: "I'd really like to sell you something, but in this temple you really need a lantern.",
         text: "Maybe there is somethign else you need?",
         a: "",
         b: "",
@@ -554,7 +563,7 @@ var gd = {
         }
     }, {
         id: 24,
-        title: "Dreeko thinks you are smart.", 
+        title: "Dreeko thinks you are smart.",
         text: "The leather shield will cut your damage in half.",
         a: "",
         b: "",
@@ -568,7 +577,7 @@ var gd = {
         }
     }, {
         id: 25,
-        title: "This potion is quite special.", 
+        title: "This potion is quite special.",
         text: "If you fall in battle, it will revive you to full health.",
         a: "",
         b: "",
@@ -581,7 +590,7 @@ var gd = {
         }
     }, {
         id: 26,
-        title: "What luck!", 
+        title: "What luck!",
         text: "You found a chest that contains 10 gems.",
         a: "",
         b: "",
@@ -715,11 +724,12 @@ var gd = {
                     act.goto = 38;
                     break;
                 case "STUFF":
-                case "INVENTORY":
-                    act.goto = ge.getItem("_inventoryScreen");
+                case "D":
+                case "QUIT":
+                    act.goto = ge.getItem("_quitScreen");
                     break;
                 default:
-                    act.goto = ge.getItem("_quitScreen");
+                    act.goto = ge.getItem("_invalidAnswer");
             }
             return act;
         }
@@ -753,7 +763,7 @@ var gd = {
         e: "",
         action: function (ge, gd, answer){
             return {
-                goto: 33, 
+                goto: 33,
                 hearts: -2
             };
         }
@@ -787,7 +797,7 @@ var gd = {
         e: "",
         action: function (ge, gd, answer){
             return {
-                goto: 33, 
+                goto: 33,
                 hearts: -2
             };
         }
@@ -885,10 +895,24 @@ var gd = {
         d: "",
         e: "",
         action: function (ge, gd, answer){
+            ge.reset(gd);
             return {
                 goto: 9999,
                 gameover: true
                 };
+        }
+    }, {
+        id: 45,
+        title: "Hey, that not a valid answer!",
+        text: "Please make a proper selection.",
+        a: "",
+        b: "",
+        c: "",
+        d: "",
+        e: "",
+        action: function (ge, gd, answer){
+            var screenNum = ge.getItem("_previousScreen");
+            return {goto: screenNum};
         }
     }]
 };

@@ -1,7 +1,7 @@
-(function(w){
+(function(w) {
     var screenTmpl = {
         id: 0,
-        title:"", 
+        title:"",
         text: "",
         a: "",
         b: "",
@@ -9,9 +9,9 @@
         d: "",
         e: "",
         usePrompt: true,
-        action: function (ge, gd, answer){
+        action: function (ge, gd, answer) {
             var act = {};
-            switch(answer){
+            switch(answer.toUpperCase()){
                 case "A":
 
                     break;
@@ -31,16 +31,18 @@
                 case "INVENTORY":
                     act.goto = ge.getItem("_inventoryScreen");
                     break;
-                default:
+                case "QUIT":
                     act.goto = ge.getItem("_quitScreen");
-
+                    break;
+                default:
+                    act.goto = ge.getItem("_invalidAnswer");
             }
             return act;
         }
     };
-    
+
     var gameData;
-    
+
    var gameEngine = {
        tokens: ["{{NAME}}", "{{TITLE}}", "{{RESCUEE}}", "{{MATCHES}}", "{{HEARTS}}", "{{GEMS}}", "{{ENEMY}}", "{{BOSS}}", "{{INVENTORY}}", "{{CREDITS}}"],
        tokenHandlers: ["name", "title", "rescuee", "matches", "hearts", "gems", "getEnemy", "getCurrentBossName", "formatInventory", "credits"],
@@ -48,7 +50,7 @@
            var scr = gd.screens[num] || false;
            return scr;
        },
-       showScreen: function(gd, screenNum){
+       showScreen: function(gd, screenNum) {
           var display = this.getScreenText(gd, screenNum);
            var answer = "";
           if (display.text) {
@@ -69,7 +71,7 @@
               return false;
           }
        },
-       getScreenText: function(gd, screenNum){
+       getScreenText: function(gd, screenNum) {
            var scr = gd.screens[screenNum - 1];
            var display = {
                text: "",
@@ -78,7 +80,7 @@
                usePrompt: false,
                stats: this.getStats()
            };
-           
+
            if (scr) {
                display.text = scr.title + "\n" + display.bar + "\n" + scr.text + "\n";
                //opts = scr.a + "\n" + scr.b + "\n" + scr.c + "\n" + scr.d + "\n" + scr.e + "\n";
@@ -89,62 +91,62 @@
                        }
                    }
                }
-               
+
                if (display.opts.trim() || scr.usePrompt) {
                    display.usePrompt = true;
                }
-               
+
                if (scr.hideStats) {
                    display.stats = "";
                }
-               
+
                //pre process text
                display.text = this.parse(display.text);
                display.opts = this.parse(display.opts);
                return display;
            }
-           
+
            return false;
-           
+
        },
-       getStats: function(){
+       getStats: function() {
            var text = "Hearts: {{HEARTS}}\n";
            text += "Gems: {{GEMS}}\n";
-           
+
            text = this.parse(text);
            return text;
        },
-       formatInventory: function(){
+       formatInventory: function() {
            var inv = this.getItem("inventory");
            var text = "";
            var bar = "====================";
-           
+
            text += bar + "";
            for(var item in inv){
                var itm = inv[item];
                text += "\n" + itm.title + ": " + itm.name + "\n" + bar;
            }
-           
+
            return text;
        },
-       hasText: function(text, textType){
+       hasText: function(text, textType) {
            text = text.trim();
            var result = false;
-           
+
            if (!text) {
                return result;
            }
-           
+
            if (textType === "ABC") {
                result = text.match(/^[A-Za-z]+$/) ? true : false;
                return result;
            }
-           
+
            if (textType === "ABC123") {
                result = text.match(/^[A-Za-z0-9]+$/) ? true : false;
                return result;
            }
-           
+
            if (text) {
                result = true;
            }
@@ -152,9 +154,9 @@
        },
        setInventory: function(item, title, name) {
            var inv = this.getItem("inventory");
-           
+
            var itm = inv[item] || {title: "Unknown", name: ""};
-           
+
            if (title){
                itm.title = title;
            }
@@ -164,22 +166,22 @@
 
            inv[item] = itm;
        },
-       getData: function(){
+       getData: function() {
            return gameData;
        },
-       setData: function(gd){
+       setData: function(gd) {
            gameData = gd;
        },
-       getTokens: function(){
+       getTokens: function() {
            return this.tokens;
        },
-       addToken: function(tkn, meth){
+       addToken: function(tkn, meth) {
            if (tkn && meth){
                this.tokens.push(tkn.toString());
                this.tokenHandlers.push(meth);
            }
        },
-       parse: function(txt, tokens){//Parse tokens
+       parse: function(txt, tokens) {//Parse tokens
            if (!tokens) {
                tokens = this.getTokens();
            }
@@ -188,26 +190,26 @@
                var item = this.tokenHandlers[i];
                var val = this.getItem(item);
                var handler = this[item] || false;
-               
+
                if (typeof(handler) === 'function') {
                    val = handler.apply(this);
                }
-               
+
                txt = txt.replace(tkn, val);
            }
            return txt;
        },
        //Handle common screen operations
-       process: function(gd, screenNum, answer){
+       process: function(gd, screenNum, answer) {
            this.setItem("_previousScreen", this.getItem("_currentScreen"));// Use this if you have menu commands that need to return to the current action screen
            this.setItem("_currentScreen", screenNum);
-           
+
            if (answer) {
                answer = answer.trim().toUpperCase();
            }
-           
+
            var act = gd.screens[screenNum - 1].action(this, gd, answer);// call screen specific logic
-           
+
            if (act.gameover){
                return false;
            }
@@ -220,13 +222,13 @@
                var potion = this.getItem('heartPotion');
                var matches = act.matches || 0;
                var shield = this.getItem('_currentShield') || 0;
-               
+
                if (matches) {
                    this.adjustItem('matches', matches);
                    var matchesText = "Matches (" + this.getItem("matches") + ")";
                     this.setInventory('light', 'Light', matchesText);
                }
-               
+
                /*
                remove or add hearts first if hearts === 0 game is over unless hasHeartPotion === true
                return false to quit
@@ -241,15 +243,15 @@
                    }
                   currentHearts = this.adjustItem('hearts', hearts);
                }
-               //Revive player 
+               //Revive player
                if (!currentHearts && potion) {
                    this.adjustItem('hearts', this.getItem('_heartLimit'));
                    this.setItem('heartPotion', false);
                    this.setInventory("potion", "", "---");
                    currentHearts = this.adjustItem('hearts', hearts);
                }
-               
-               
+
+
                //game over player was killed
                if (!currentHearts) {
                    goto = this.getItem("_gameOverLose");
@@ -258,11 +260,11 @@
                if (gems) {
                    this.adjustItem('gems', gems);
                }
-               
+
                if (goto) {
                    this.showScreen(gd, goto);
                }
-               
+
            }
            else {
                console.log("no act found");
@@ -274,18 +276,18 @@
            }
            return false;
        },
-       rollDice: function(){
+       rollDice: function() {
            var diceNumber = Math.random() * 12 + 1;
            diceNumber = Math.floor(diceNumber);
            return diceNumber;
        },
-       getItem: function(name){
+       getItem: function(name) {
            if (name) {
                var item = gameData[name];
                return item;
            }
        },
-       setItem: function(name, val){
+       setItem: function(name, val) {
            if (!val) {
                val = false; //use false instead of falsey
            }
@@ -293,22 +295,22 @@
                gameData[name] = val;
            }
        },
-       showScreenTmpl: function(){
+       showScreenTmpl: function() {
            console.log('screen template ', screenTmpl);
        },
-       setTitle: function(title){
-           
+       setTitle: function(title) {
+
            if (title) {
                gameData.screens[0].title = title;
            }
-               
+
            var ttl = gameData.screens[0].title;
            gameData.title = ttl;
        },
-       getTitle: function(){
+       getTitle: function() {
            return gameData.screens[0].title;
        },
-       adjustItem: function(name, val){
+       adjustItem: function(name, val) {
            if (name && val) {
                var item = this.getItem(name);
                item = item + val;
@@ -319,11 +321,11 @@
                return gameData[name];
            }
        },
-       getRandomNum: function(num){
+       getRandomNum: function(num) {
            num = num ? num : 1;
            return Math.floor(Math.random() * num);
        },
-       getEnemy: function(num){
+       getEnemy: function(num) {
            var nmes = gameData.enemies;
            var nme = "";
            if (num) {
@@ -335,27 +337,27 @@
            }
            return nme;
        },
-       getBoss: function(num){
+       getBoss: function(num) {
            var bosses = this.getItem("bosses");
            var boss = bosses[num - 1];
-           
+
            return boss;
        },
-       attack: function(target, damage){
+       attack: function(target, damage) {
            var hearts = target.hearts;
            hearts = hearts + damage;
            if (hearts < 0) {
                hearts = 0;
            }
-           
+
            target.hearts = hearts;
            return hearts;
        },
-       getCurrentBossName: function(){
+       getCurrentBossName: function() {
            var boss = this.getItem('_currentBoss') || {};
            return boss.name || "";
        },
-       sellItem: function(item, price){
+       sellItem: function(item, price) {
            var gems = this.getItem('gems');
            if (gems >= price) {
                this.adjustItem('gems', (price * -1));
@@ -364,18 +366,63 @@
            }
            return false;
        },
-       start: function(gd){
+       start: function(gd) {
            this.setData(gd);
            this.setTitle();
            this.showScreen(gd, 1);
+       },
+       /**
+       *@desc This method clear/resets any stateful game data. Override this method at your pleasure.
+       *@param {Object} gd - The game data object.
+       */
+       reset: function(gd) {
+           gd.name = "Tank";
+           gd.hearts = 5;
+           gd.matches = 5;
+           gd.lantern = false;
+           gd.gems = 0;
+           gd.forestKey = false;
+           gd.forestBossKey = false;
+           gd.silverSword = true;
+           gd.leatherShield = false;
+           gd.heartPotion = false;
+           gd.bosses = [{name: "King Malvox", hearts: 7}];
+           gd._currentScreen = 0;
+           gd._previousScreen = 0;
+           gd._currentBoss = "";
+           gd._currentShield = 0;
+           gd._heartLimit = 5;
+           gd._gameOverWin = 43;
+           gd._gameOverLose = 42;
+           gd._quitScreen = 44;
+           gd._inventoryScreen = 40;
+           gd._creditsScreen = 41;
+           gd.inventory = {
+             sword: {
+                 title: "Sword",
+                 name: "---"
+             },
+             shield: {
+                 title: "Shield",
+                 name: "---"
+             },
+             light: {
+                 title: "Light",
+                 name: "---"
+             },
+             key: {
+                 title: "key",
+                 name: "---"
+             }
+         };
        }
     };
-    
+
     if (w) {
         w.ge = gameEngine;
     }
-    
+
     return gameEngine;
-    
+
 
 })(window);
